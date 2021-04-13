@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: shibboleth-sp-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ssl-redirect: “true”
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - shibboleth-sp.localhost
+    secretName: shibboleth-sp-tls-certificate
+  rules:
+  - host: shibboleth-sp.localhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: shibboleth-sp-service
+          servicePort: 80

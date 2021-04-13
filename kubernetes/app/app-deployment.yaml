@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shibboleth-sp
+spec:
+  selector:
+    matchLabels:
+      app: shibboleth-sp
+  replicas: 3
+  selector:
+    matchLabels:
+      app: shibboleth-sp
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 3
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: shibboleth-sp
+    spec:
+      containers:
+      - name: k8s-shibboleth-sp
+        image: k8s-shibboleth-sp/app-dev:latest
+        ports:
+        - containerPort: 80
